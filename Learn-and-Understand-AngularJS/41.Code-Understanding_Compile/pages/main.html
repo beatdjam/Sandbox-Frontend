@@ -1,0 +1,7 @@
+<label>検索</label>
+<input type="text" value="太郎">
+
+<h3>検索結果：</h3>
+<div class="list-group">
+    <search-result ng-repeat="person in people" person-object="person" formatted-address-function="formattedAddress"></search-result>
+</div>
