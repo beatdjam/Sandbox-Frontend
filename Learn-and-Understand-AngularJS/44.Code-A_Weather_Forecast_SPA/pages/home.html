@@ -1,9 +1,11 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
         <h4>予報を見たい市を入力してください</h4>
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="city"/>
-        </div>
-        <a href="#/forecast" class="btn btn-primary">予報を見る</a>
+        <form ng-submit="submit()">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="city"/>
+            </div>
+            <input type="submit" class="btn btn-primary" value="予報を見る">
+        </form>
     </div>
 </div>

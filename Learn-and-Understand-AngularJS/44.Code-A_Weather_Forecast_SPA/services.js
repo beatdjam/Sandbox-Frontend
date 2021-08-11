@@ -3,3 +3,10 @@
 weatherApp.service('cityService', function () {
     this.city = 'Osaka';
 });
+
+weatherApp.service('forecastService', ['$resource', function ($resource) {
+    // APIが使えなくなってるのでlocalに置いたJSONを取るようにしてる
+    this.getWeather = (city, days) => {
+        return $resource("test.json", {}).get({q: city, cnt: days,});
+    }
+}]);
