@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <title>sample</title>
+    <script src="//code.angularjs.org/1.5.0/angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<div ng-controller="sampleController">
+    <h2>{{ msg }}</h2>
+    <!--  ng-modelによるbindingで入力に対応して表示が変わる  -->
+    <input type="text" ng-model="msg">
+</div>
+</body>
+</html>

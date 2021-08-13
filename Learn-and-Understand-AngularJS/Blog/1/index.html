@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--  ng-appでsampleAppモジュールを関連付け  -->
+<html lang="ja" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <title>sample</title>
+    <!--  AngularJSの読み込み  -->
+    <script src="//code.angularjs.org/1.5.0/angular.min.js"></script>
+    <script src="app.js"></script>
+    <!--  bootstrapの読み込み  -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<!--  ng-controllerでsampleControllerを関連付け  -->
+<div ng-controller="sampleController">
+    <!--  sampleControllerのScopeのmsgを出力  -->
+    <h2>{{ msg }}</h2>
+</div>
+</body>
+</html>
