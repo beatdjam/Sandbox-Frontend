@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <title>sample</title>
+    <script src="//code.angularjs.org/1.5.0/angular.min.js"></script>
+    <!--  ルーティング用のモジュールを読み込む  -->
+    <script src="//code.angularjs.org/1.5.0/angular-route.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<!--  ルーティング結果を埋め込む場所をng-viewでマークする  -->
+<div ng-view></div>
+<!--  切り替えを確認するためにボタンを置く  -->
+<a href="#/" class="btn">Sample</a>
+<a href="#/sample2" class="btn">Sample2</a>
+</body>
+</html>

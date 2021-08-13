@@ -1,12 +1,12 @@
 const sampleApp = angular.module('sampleApp', ['ngRoute']);
 
 sampleApp
-    .controller('sampleController', function ($scope) {
+    .controller('sampleController', ['$scope', function ($scope) {
         $scope.msg = 'Hello, World!';
-    })
-    .controller('sampleController2', function ($scope) {
+    }])
+    .controller('sampleController2', ['$scope', function ($scope) {
         $scope.msg = 'Hello, NewWorld!';
-    });
+    }]);
 
 sampleApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
