@@ -1,15 +1,13 @@
-const sampleApp = angular.module('sampleApp', ['ngRoute']);
+const sampleApp = angular.module('sampleApp', []);
 
-sampleApp.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider
-        .when('/', {
-            templateUrl: 'template.html',
-            controller: 'sampleController',
-            controllerAs: 'ctrl'
-        })
-}]);
+sampleApp.directive('sampleDirective', () => {
+    return {
+        template: '<h2>{{ ctrl.msg }}</h2>',
+        controller: 'sampleController',
+        controllerAs: 'ctrl'
+    }
+});
 
-// 登録したServiceをInjectして処理を呼び出す
 sampleApp
     .controller('sampleController', [function () {
         this.msg = 'Hello, World!';
