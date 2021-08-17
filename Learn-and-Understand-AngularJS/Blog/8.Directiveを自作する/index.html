@@ -9,9 +9,15 @@
 </head>
 <body>
 <div ng-controller="sampleController as ctrl">
+    <!--  双方向バインディングでディレクティブに値を渡す  -->
     <sample-directive-a value="ctrl.msg"></sample-directive-a>
+    <!--  文字列でディレクティブに値を渡す  -->
     <sample-directive-b value="ctrl.msg"></sample-directive-b>
+    <!--  interpolationで渡すとディレクティブに渡る文字列自体が変化するので見た目上双方向バインディングのものと同じになる  -->
+    <sample-directive-b value="{{ ctrl.msg }}"></sample-directive-b>
+    <!--  ディレクティブに関数を渡す  -->
     <sample-directive-c function="ctrl.upperMsg()"></sample-directive-c>
+    <!--  値の変更の確認用  -->
     <input type="text" ng-model="ctrl.msg">
 </div>
 </body>
