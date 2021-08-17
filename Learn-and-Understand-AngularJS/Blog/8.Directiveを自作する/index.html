@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
 </head>
 <body>
-<sample-directive></sample-directive>
+<div ng-controller="sampleController as ctrl">
+    <sample-directive-a value="ctrl.msg"></sample-directive-a>
+    <sample-directive-b value="ctrl.msg"></sample-directive-b>
+    <sample-directive-c function="ctrl.upperMsg()"></sample-directive-c>
+    <input type="text" ng-model="ctrl.msg">
+</div>
 </body>
 </html>
