@@ -79,6 +79,6 @@
     /* Disallow inconsistently-cased references to the same file. */
   },
   "exclude": [
-    "section2"
+    "sample"
   ]
 }
