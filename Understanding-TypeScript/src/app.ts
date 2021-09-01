@@ -23,6 +23,9 @@ type Numeric = number | boolean;
 // Union型の場合は交差している型(双方が持っている型)になる
 type Universal = Combinable & Numeric;
 
+// function overload
+function add(a: number, b:number): number;
+function add(a: string, b: string): string;
 // type guard
 function add(a: Combinable, b: Combinable) {
     if (typeof a === 'string' || typeof b === 'string') {
@@ -30,7 +33,6 @@ function add(a: Combinable, b: Combinable) {
     }
     return a + b;
 }
-
 
 // 型ガード
 type UnknownEmployee = Employee | Admin;
@@ -89,6 +91,7 @@ interface Horse {
 
 type Animal = Bird | Horse;
 
+// typeで実際の型を判別する
 function moveAnimal(animal: Animal) {
     let speed;
     switch (animal.type) {
@@ -101,3 +104,46 @@ function moveAnimal(animal: Animal) {
     }
     console.log(speed);
 }
+
+// 型キャスト
+// const userInputElement = <HTMLInputElement>document.getElementById('user-input')!;
+const userInputElement = document.getElementById('user-input') as HTMLInputElement;
+
+// !を使わないとき
+if (userInputElement) {
+    (userInputElement as HTMLInputElement).value = 'hoge';
+}
+
+// index型
+interface ErrorContainer {
+    // {email: 'invalid address', username: 'invalid name'}
+    [prop: string] : string;
+}
+
+const errorBag: ErrorContainer = {
+    email: 'invalid address',
+    username: 'invalid name',
+}
+
+// 関数オーバーロード
+const result = add(1, 5);
+const result2 = add('Hello', 'TypeScript');
+result2.split(' ');
+
+// optional chaining
+const fetchedUserData = {
+    id: 'u1',
+    name: 'user1',
+    job: {
+        title: 'Developer',
+        description: 'TypeScript',
+    }
+}
+
+console.log(fetchedUserData?.job?.title);
+
+// Nullish Coalescing Operator
+const userInput = null;
+// これは空文字でもデフォルト値が入っちゃう
+// const storedData = userInput || 'DEFAULT';
+const storedData = userInput ?? 'DEFAULT'; // これだとnullかundefinedのときだけデフォルト値になる
