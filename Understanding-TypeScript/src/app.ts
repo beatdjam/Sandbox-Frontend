@@ -16,9 +16,8 @@ function LoggerFactory(str: string) {
 function WithTemplate(template: string, hookId: string) {
     return function<T extends {new(..._: any[]): {name: string}} > (originConstructor: T) {
         // デコレータを呼び出した
-        // @ts-ignore
         return class extends originConstructor {
-            constructor() {
+            constructor(..._: any[]) {
                 super();
                 const hookEl = document.getElementById(hookId);
                 if (hookEl) {
