@@ -14,13 +14,18 @@ function LoggerFactory(str: string) {
 // template: dom
 // hookId: Id
 function WithTemplate(template: string, hookId: string) {
-    return function (constructor: any) {
-        const hookEl = document.getElementById(hookId);
-
-        if (hookEl) {
-            hookEl.innerHTML = template;
-            const p = new constructor();
-            hookEl.querySelector('h1')!.textContent = p.name;
+    return function<T extends {new(..._: any[]): {name: string}} > (originConstructor: T) {
+        // デコレータを呼び出した
+        // @ts-ignore
+        return class extends originConstructor {
+            constructor() {
+                super();
+                const hookEl = document.getElementById(hookId);
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector('h1')!.textContent = this.name;
+                }
+            }
         }
     }
 }
