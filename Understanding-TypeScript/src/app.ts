@@ -49,6 +49,7 @@ function Log(target: any, propertyName: string | Symbol) {
 }
 
 // アクセサデコレータ
+// PropertyDescriptorを値として返すことができる
 function Log2(target: any, name: string, descripter: PropertyDescriptor) {
     console.log(target);
     console.log(name);
@@ -93,3 +94,31 @@ class Product {
         return this._price * (1 + tax);
     }
 }
+
+// メソッドデコレータでthisの挙動を変える
+function AutoBind(_: any,_2: string, descripter : PropertyDescriptor) {
+    const originMethod = descripter.value;
+    const adjDescripter: PropertyDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            // ここのthisはデコレータが適用されるオブジェクト
+            return originMethod.bind(this);
+        }
+    }
+    return adjDescripter
+}
+
+class Printer {
+    message= 'クリックしました';
+
+    @AutoBind
+    showMessage() {
+        console.log(this.message);
+    }
+}
+
+const p = new Printer();
+
+const button = document.querySelector('button')!;
+button.addEventListener('click',p.showMessage);
