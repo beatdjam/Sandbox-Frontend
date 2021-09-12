@@ -1,4 +1,4 @@
-function Autobind(_: any, _2: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+function AutoBind(_: any, _2: string, descriptor: PropertyDescriptor): PropertyDescriptor {
     const origin = descriptor.value;
     return {
         configurable: true,
@@ -35,7 +35,7 @@ class ProjectInput {
         this.configure();
     }
 
-    @Autobind
+    @AutoBind
     private submitHandler(event: Event) {
         event.preventDefault();
         console.log(this.titleInputElement.value);
