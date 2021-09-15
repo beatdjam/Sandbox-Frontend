@@ -17,7 +17,6 @@ interface Validatable {
     max?: number;
 }
 
-
 class ValidatableImpl {
     value: string | number;
     required?: boolean;
@@ -54,9 +53,20 @@ class ValidatableImpl {
     }
 }
 
+enum ProjectStatus {
+    Active, Finished
+}
+
+class Project {
+    constructor(public id: string, public title: string, public description: string, public manday: number, public status: ProjectStatus) {
+    }
+}
+
+type Listener = (items: Project[]) => void;
+
 class ProjectState {
-    private listeners: any[] = [];
-    private projects: any[] = [];
+    private listeners: Listener[] = [];
+    private projects: Project[] = [];
     private static instance: ProjectState;
 
     private constructor() {
@@ -71,17 +81,12 @@ class ProjectState {
     }
 
     addProject(title: string, description: string, manday: number) {
-        const newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: description,
-            manday: manday
-        }
+        const newProject = new Project(Math.random().toString(), title, description, manday, ProjectStatus.Active);
         this.projects.push(newProject);
         this.listeners.forEach(it => it(this.projects.slice()));
     }
 
-    addListener(fn: Function) {
+    addListener(fn: Listener) {
         this.listeners.push(fn);
     }
 }
@@ -90,7 +95,7 @@ class ProjectList {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     element: HTMLElement;
-    assignedProjects: any[];
+    assignedProjects: Project[];
 
     constructor(private type: `active` | `finished`) {
         // template読み込み
@@ -104,7 +109,7 @@ class ProjectList {
         this.element = importedNode.firstElementChild as HTMLFormElement;
         this.element.id = `${this.type}-projects`;
 
-        ProjectState.getInstance().addListener((projects: any[]) => {
+        ProjectState.getInstance().addListener((projects: Project[]) => {
             this.assignedProjects = projects;
             this.renderProjects();
         });
@@ -205,6 +210,6 @@ class ProjectInput {
     }
 }
 
-const input = new ProjectInput();
-const active = new ProjectList(`active`);
-const finished = new ProjectList(`finished`);
+new ProjectInput();
+new ProjectList(`active`);
+new ProjectList(`finished`);
