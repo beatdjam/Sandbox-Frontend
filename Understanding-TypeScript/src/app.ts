@@ -123,6 +123,10 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     private project: Project;
 
+    get manday() {
+        return this.project.manday < 20 ? this.project.manday.toString() + `人日` : (this.project.manday / 20).toString() + `人月`;
+    }
+
     constructor(hostId: string, project: Project) {
         super(`single-project`, hostId, false, project.id);
         this.project = project;
@@ -136,7 +140,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
 
     override renderContent() {
         this.element.querySelector(`h2`)!.textContent = this.project.title;
-        this.element.querySelector(`h3`)!.textContent = this.project.manday.toString();
+        this.element.querySelector(`h3`)!.textContent = this.manday;
         this.element.querySelector(`p`)!.textContent = this.project.description.toString();
     }
 }
@@ -151,6 +155,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
         this.configure();
         this.renderContent();
     }
+
     override configure() {
         ProjectState.getInstance().addListener((projects: Project[]) => {
             this.assignedProjects = projects.filter(p => {
