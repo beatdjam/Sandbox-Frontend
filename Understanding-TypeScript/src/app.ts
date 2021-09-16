@@ -120,6 +120,27 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     }
 }
 
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+    private project: Project;
+
+    constructor(hostId: string, project: Project) {
+        super(`single-project`, hostId, false, project.id);
+        this.project = project;
+
+        this.configure();
+        this.renderContent();
+    }
+
+    override configure() {
+    }
+
+    override renderContent() {
+        this.element.querySelector(`h2`)!.textContent = this.project.title;
+        this.element.querySelector(`h3`)!.textContent = this.project.manday.toString();
+        this.element.querySelector(`p`)!.textContent = this.project.description.toString();
+    }
+}
+
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     assignedProjects: Project[];
 
@@ -130,17 +151,6 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
         this.configure();
         this.renderContent();
     }
-
-    private renderProjects() {
-        const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
-        listEl.innerHTML = '';
-        this.assignedProjects.forEach(item => {
-            const listItem = document.createElement(`li`);
-            listItem.textContent = item.title;
-            listEl.appendChild(listItem);
-        });
-    }
-
     override configure() {
         ProjectState.getInstance().addListener((projects: Project[]) => {
             this.assignedProjects = projects.filter(p => {
@@ -149,6 +159,13 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
             });
             this.renderProjects();
         });
+    }
+
+
+    private renderProjects() {
+        const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+        listEl.innerHTML = '';
+        this.assignedProjects.forEach(item => new ProjectItem(listEl.id, item));
     }
 
     renderContent() {
