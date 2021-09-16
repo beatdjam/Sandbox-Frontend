@@ -62,14 +62,22 @@ class Project {
     }
 }
 
-type Listener = (items: Project[]) => void;
+type Listener<T> = (items: T[]) => void;
 
-class ProjectState {
-    private listeners: Listener[] = [];
+class State<T> {
+    listeners: Listener<T>[] = [];
+
+    addListener(fn: Listener<T>) {
+        this.listeners.push(fn);
+    }
+}
+
+class ProjectState extends State<Project> {
     private projects: Project[] = [];
     private static instance: ProjectState;
 
     private constructor() {
+        super();
     }
 
     static getInstance() {
@@ -85,41 +93,47 @@ class ProjectState {
         this.projects.push(newProject);
         this.listeners.forEach(it => it(this.projects.slice()));
     }
+}
 
-    addListener(fn: Listener) {
-        this.listeners.push(fn);
+abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+    templateElement: HTMLTemplateElement;
+    hostElement: T;
+    element: U;
+
+    protected constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId ?: string) {
+        this.templateElement = document.getElementById(templateId)! as HTMLTemplateElement;
+        this.hostElement = document.getElementById(hostElementId)! as T;
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = importedNode.firstElementChild as U;
+        if (newElementId) {
+            this.element.id = newElementId;
+        }
+        this.attach(insertAtStart);
+    }
+
+    abstract configure(): void;
+
+    abstract renderContent(): void;
+
+    private attach(insertAtStart: boolean) {
+        this.hostElement.insertAdjacentElement(insertAtStart ? `afterbegin` : `beforeend`, this.element);
     }
 }
 
-class ProjectList {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLElement;
+class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     assignedProjects: Project[];
 
     constructor(private type: `active` | `finished`) {
-        // template読み込み
-        this.templateElement = document.getElementById(`project-list`)! as HTMLTemplateElement;
-        // app本体のdiv読み込み
-        this.hostElement = document.getElementById(`app`)! as HTMLDivElement;
+        super(`project-list`, `app`, false, `${type}-projects`);
         this.assignedProjects = [];
 
-        // templateの適用
-        const importedNode = document.importNode(this.templateElement.content, true);
-        this.element = importedNode.firstElementChild as HTMLFormElement;
-        this.element.id = `${this.type}-projects`;
-
-        ProjectState.getInstance().addListener((projects: Project[]) => {
-            this.assignedProjects = projects;
-            this.renderProjects();
-        });
-
-        this.attach();
+        this.configure();
         this.renderContent();
     }
 
     private renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+        listEl.innerHTML = '';
         this.assignedProjects.forEach(item => {
             const listItem = document.createElement(`li`);
             listItem.textContent = item.title;
@@ -127,36 +141,29 @@ class ProjectList {
         });
     }
 
-    private renderContent() {
+    override configure() {
+        ProjectState.getInstance().addListener((projects: Project[]) => {
+            this.assignedProjects = projects.filter(p => {
+                if (this.type === `active`) return p.status === ProjectStatus.Active
+                return p.status === ProjectStatus.Finished
+            });
+            this.renderProjects();
+        });
+    }
+
+    renderContent() {
         this.element.querySelector(`ul`)!.id = `${this.type}-projects-list`;
         this.element.querySelector(`h2`)!.textContent = this.type === `active` ? `実行中` : `完了`;
     }
-
-    private attach() {
-        this.hostElement.insertAdjacentElement(`beforeend`, this.element);
-    }
-
 }
 
-class ProjectInput {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     mandayInputElement: HTMLInputElement;
 
     constructor() {
-        // template読み込み
-        this.templateElement = document.getElementById(`project-input`)! as HTMLTemplateElement;
-        // app本体のdiv読み込み
-        this.hostElement = document.getElementById(`app`)! as HTMLDivElement;
-
-        // templateの適用
-        const importedNode = document.importNode(this.templateElement.content, true);
-        this.element = importedNode.firstElementChild as HTMLFormElement;
-        this.element.id = `user-input`;
-        this.attach();
+        super(`project-input`, `app`, true, `user-input`);
 
         // 講義ではattachより先にconfigureしてたけど、attachしないとDOMが無いのでnullになる
         this.titleInputElement = document.getElementById(`title`)! as HTMLInputElement;
@@ -201,12 +208,11 @@ class ProjectInput {
         }
     }
 
-    private configure() {
+    configure() {
         this.element.addEventListener(`submit`, this.submitHandler);
     }
 
-    private attach() {
-        this.hostElement.insertAdjacentElement(`afterbegin`, this.element);
+    override renderContent() {
     }
 }
 
