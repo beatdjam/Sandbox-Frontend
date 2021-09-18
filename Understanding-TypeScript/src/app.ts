@@ -1,3 +1,17 @@
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+
+    dragendHandler(event: DragEvent): void;
+}
+
+interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+
+    dropHandler(event: DragEvent): void;
+
+    dragLeaveHandler(event: DragEvent): void;
+}
+
 function AutoBind(_: any, _2: string, descriptor: PropertyDescriptor): PropertyDescriptor {
     const origin = descriptor.value;
     return {
@@ -120,7 +134,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     }
 }
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable {
     private project: Project;
 
     get manday() {
@@ -135,7 +149,18 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
         this.renderContent();
     }
 
+    @AutoBind
+    dragStartHandler(event: DragEvent): void {
+        console.log(event);
+    }
+
+    dragendHandler(_: DragEvent): void {
+        console.log('Drag End');
+    }
+
     override configure() {
+        this.element.addEventListener('dragstart', this.dragStartHandler);
+        this.element.addEventListener('dragend', this.dragendHandler);
     }
 
     override renderContent() {
@@ -145,7 +170,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     }
 }
 
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+class ProjectList extends Component<HTMLDivElement, HTMLElement> implements DragTarget {
     assignedProjects: Project[];
 
     constructor(private type: `active` | `finished`) {
@@ -154,6 +179,21 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 
         this.configure();
         this.renderContent();
+    }
+
+    dragOverHandler(event: DragEvent): void {
+        console.log(event);
+        throw new Error("Method not implemented.");
+    }
+
+    dropHandler(event: DragEvent): void {
+        console.log(event);
+        throw new Error("Method not implemented.");
+    }
+
+    dragLeaveHandler(event: DragEvent): void {
+        console.log(event);
+        throw new Error("Method not implemented.");
     }
 
     override configure() {
