@@ -105,6 +105,16 @@ class ProjectState extends State<Project> {
     addProject(title: string, description: string, manday: number) {
         const newProject = new Project(Math.random().toString(), title, description, manday, ProjectStatus.Active);
         this.projects.push(newProject);
+        this.updateListeners();
+    }
+
+    moveProject(id: string, newStatus: ProjectStatus) {
+        const project = this.projects.find(prj => prj.id === id);
+        if (project && project.status !== newStatus) project.status = newStatus;
+        this.updateListeners();
+    }
+
+    private updateListeners() {
         this.listeners.forEach(it => it(this.projects.slice()));
     }
 }
@@ -151,7 +161,8 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 
     @AutoBind
     dragStartHandler(event: DragEvent): void {
-        console.log(event);
+        event.dataTransfer!.setData('text/plain', this.project.id);
+        event.dataTransfer!.effectAllowed = 'move';
     }
 
     dragendHandler(_: DragEvent): void {
@@ -181,22 +192,36 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
         this.renderContent();
     }
 
+    @AutoBind
     dragOverHandler(event: DragEvent): void {
-        console.log(event);
-        throw new Error("Method not implemented.");
+        if (event.dataTransfer && event.dataTransfer.types[0] === 'text/plain') {
+            event.preventDefault();
+            this.element.querySelector('ul')!
+                .classList
+                .add('droppable');
+        }
     }
 
+    @AutoBind
     dropHandler(event: DragEvent): void {
-        console.log(event);
-        throw new Error("Method not implemented.");
+        this.element.querySelector('ul')!
+            .classList
+            .remove('droppable');
+        const id = event.dataTransfer!.getData('text/plain');
+        ProjectState.getInstance().moveProject(id, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished);
     }
 
-    dragLeaveHandler(event: DragEvent): void {
-        console.log(event);
-        throw new Error("Method not implemented.");
+    @AutoBind
+    dragLeaveHandler(_: DragEvent): void {
+        this.element.querySelector('ul')!
+            .classList
+            .remove('droppable');
     }
 
     override configure() {
+        this.element.addEventListener('dragover', this.dragOverHandler);
+        this.element.addEventListener('drop', this.dropHandler);
+        this.element.addEventListener('dragleave', this.dragLeaveHandler);
         ProjectState.getInstance().addListener((projects: Project[]) => {
             this.assignedProjects = projects.filter(p => {
                 if (this.type === `active`) return p.status === ProjectStatus.Active
