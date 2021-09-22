@@ -1,5 +1,6 @@
 export enum ProjectStatus {
-    Active, Finished
+    Active = 'active',
+    Finished = 'finished'
 }
 
 export class Project {

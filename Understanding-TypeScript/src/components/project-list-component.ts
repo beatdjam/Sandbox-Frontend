@@ -8,7 +8,7 @@ import {ProjectItem} from "./project-item-component.js";
 export class ProjectList extends Component<HTMLDivElement, HTMLElement> implements DragTarget {
     assignedProjects: Project[];
 
-    constructor(private type: `active` | `finished`) {
+    constructor(private type: ProjectStatus) {
         super(`project-list`, `app`, false, `${type}-projects`);
         this.assignedProjects = [];
 
@@ -32,7 +32,7 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
             .classList
             .remove('droppable');
         const id = event.dataTransfer!.getData('text/plain');
-        ProjectState.getInstance().moveProject(id, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished);
+        ProjectState.getInstance().moveProject(id, this.type);
     }
 
     @AutoBind
@@ -47,10 +47,7 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
         this.element.addEventListener('drop', this.dropHandler);
         this.element.addEventListener('dragleave', this.dragLeaveHandler);
         ProjectState.getInstance().addListener((projects: Project[]) => {
-            this.assignedProjects = projects.filter(p => {
-                if (this.type === `active`) return p.status === ProjectStatus.Active
-                return p.status === ProjectStatus.Finished
-            });
+            this.assignedProjects = projects.filter(p => this.type === p.status);
             this.renderProjects();
         });
     }
@@ -64,6 +61,6 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
 
     renderContent() {
         this.element.querySelector(`ul`)!.id = `${this.type}-projects-list`;
-        this.element.querySelector(`h2`)!.textContent = this.type === `active` ? `実行中` : `完了`;
+        this.element.querySelector(`h2`)!.textContent = this.type === ProjectStatus.Active ? `実行中` : `完了`;
     }
 }
