@@ -19,9 +19,8 @@ export class ProjectState extends State<Project> {
     }
 
     static getInstance() {
-        if (this.instance) {
-            return this.instance;
-        }
+        if (this.instance) return this.instance;
+
         this.instance = new ProjectState();
         return this.instance;
     }
@@ -34,8 +33,10 @@ export class ProjectState extends State<Project> {
 
     moveProject(id: string, newStatus: ProjectStatus) {
         const project = this.projects.find(prj => prj.id === id);
-        if (project && project.status !== newStatus) project.status = newStatus;
-        this.updateListeners();
+        if (project && project.status !== newStatus) {
+            project.status = newStatus;
+            this.updateListeners();
+        }
     }
 
     private updateListeners() {
