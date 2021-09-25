@@ -10,13 +10,11 @@ module.exports = {
     },
     devServer: {
         static: [
-            {
-                directory: path.join(__dirname)
-            },
-            {
-                directory: path.join(__dirname, 'dist'),
-                publicPath: 'dist',
-            }
+            // rootのindex.htmlを読み込ませるためにこうしてる
+            // なんか方法ありそうな気はする
+            {directory: path.join(__dirname)},
+            // こっちでbundle.js読ませてる
+            {directory: path.join(__dirname, 'dist')}
         ],
         open: true,
     },
