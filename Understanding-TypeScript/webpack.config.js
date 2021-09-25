@@ -1,14 +1,23 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'development',
     entry: './src/app.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/dist/',
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        publicPath: "/dist/",
+        static: [
+            {
+                directory: path.join(__dirname)
+            },
+            {
+                directory: path.join(__dirname, 'dist'),
+                publicPath: 'dist',
+            }
+        ],
         open: true,
     },
     devtool: 'eval',
