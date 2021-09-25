@@ -1,25 +1,15 @@
 const path = require('path');
+const CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './src/app.ts',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/dist/',
     },
-    devServer: {
-        static: [
-            // rootのindex.htmlを読み込ませるためにこうしてる
-            // なんか方法ありそうな気はする
-            {directory: path.join(__dirname)},
-            // こっちでbundle.js読ませてる
-
-            {directory: path.join(__dirname, 'dist')}
-        ],
-        open: true,
-    },
-    devtool: 'eval',
+    devtool: false,
     module: {
         rules: [
             {
@@ -32,4 +22,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
     },
+    plugins: [
+        new CleanPlugin.CleanWebpackPlugin(),
+    ]
 };

@@ -5,5 +5,3 @@ import {ProjectStatus} from "./models/project-model";
 new ProjectInput();
 new ProjectList(ProjectStatus.Active);
 new ProjectList(ProjectStatus.Finished);
-
-console.log('test');
