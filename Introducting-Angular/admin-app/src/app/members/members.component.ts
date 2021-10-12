@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Member} from "../member";
 import {MemberService} from "../member.service";
+import {MessageService} from "../message.service";
 
 @Component({
   selector: 'app-members',
@@ -12,7 +13,7 @@ export class MembersComponent implements OnInit {
   members: Member[] = [];
   selectedMember: Member | undefined;
 
-  constructor(private memberService: MemberService) {
+  constructor(private memberService: MemberService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -21,6 +22,7 @@ export class MembersComponent implements OnInit {
 
   onSelect(member: Member): void {
     this.selectedMember = member;
+    this.messageService.add(`社員データ${member.id}を選択`)
   }
 
   getMembers(): void {
