@@ -14,4 +14,9 @@ export class MemberService {
     this.messageService.add('MemberService: 社員一覧を取得');
     return of(MEMBERS);
   }
+
+  getMember(id: number): Observable<Member | undefined> {
+    this.messageService.add(`MemberService: 社員${id}を取得`);
+    return of(MEMBERS.find(member => member.id === id));
+  }
 }
