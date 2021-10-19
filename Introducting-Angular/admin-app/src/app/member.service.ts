@@ -16,7 +16,7 @@ export class MemberService {
   }
 
   getMembers(): Observable<Member[]> {
-    return this.httpService.get<Member[]>(this.membersUrl)
+    return this.httpService.get<Member[]>(this.membersUrl, this.httpOptions)
       .pipe(
         tap(_ => this.log('社員データを取得しました')),
         catchError(this.handleError<Member[]>('getMembers', []))
@@ -49,7 +49,7 @@ export class MemberService {
 
   deleteMember(id: number): Observable<any> {
     const url = `${this.membersUrl}/${id}`;
-    return this.httpService.delete<Member>(url).pipe(
+    return this.httpService.delete<Member>(url, this.httpOptions).pipe(
       tap(_ => this.log('社員データを削除しました')),
       catchError(this.handleError<Member>(`deleteMember id=${id}`))
     );
