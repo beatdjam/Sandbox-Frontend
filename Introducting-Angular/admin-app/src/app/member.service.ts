@@ -36,7 +36,23 @@ export class MemberService {
       .pipe(
         tap(_ => this.log('社員データを変更しました')),
         catchError(this.handleError<any>(`updateMember`))
-      )
+      );
+  }
+
+  addMember(member: Member): Observable<Member> {
+    return this.httpService.post<Member>(this.membersUrl, member, this.httpOptions)
+      .pipe(
+        tap(_ => this.log('社員データを追加しました')),
+        catchError(this.handleError<any>(`addMember`))
+      );
+  }
+
+  deleteMember(id: number): Observable<any> {
+    const url = `${this.membersUrl}/${id}`;
+    return this.httpService.delete<Member>(url).pipe(
+      tap(_ => this.log('社員データを削除しました')),
+      catchError(this.handleError<Member>(`deleteMember id=${id}`))
+    );
   }
 
   private log(message: string) {
