@@ -11,6 +11,7 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
 import {InMemoryDataService} from './in-memory-data.service';
+import { MemberSearchComponent } from './member-search/member-search.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {InMemoryDataService} from './in-memory-data.service';
     MembersComponent,
     MemberDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    MemberSearchComponent
   ],
   imports: [
     BrowserModule,

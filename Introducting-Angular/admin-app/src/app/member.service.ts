@@ -55,6 +55,14 @@ export class MemberService {
     );
   }
 
+  searchMembers(term: string): Observable<Member[]> {
+    if (!term.trim()) return of([]);
+    return this.httpService.get<Member[]>(`${this.membersUrl}/?name=${term}`).pipe(
+      tap(_ => this.log(`社員${term}を検索`)),
+      catchError(this.handleError<Member[]>(`searchMembers term=${term}`, []))
+    );
+  }
+
   private log(message: string) {
     this.messageService.add(`MemberService: ${message}`);
   }
