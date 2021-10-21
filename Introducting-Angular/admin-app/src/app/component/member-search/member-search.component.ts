@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, of, Subject} from "rxjs";
-import {Member} from "../member";
-import {MemberService} from "../member.service";
+import {Member} from "../../model/member";
+import {MemberService} from "../../service/member.service";
 import {debounceTime, distinctUntilChanged, switchMap} from "rxjs/operators";
 
 @Component({

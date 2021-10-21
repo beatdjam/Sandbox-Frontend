@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MemberService} from "../member.service";
-import {Member} from "../member";
+import {MemberService} from "../../service/member.service";
+import {Member} from "../../model/member";
 
 @Component({
   selector: 'app-dashboard',

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Member} from "../member";
+import {Member} from "../../model/member";
 import {ActivatedRoute} from "@angular/router";
-import {MemberService} from "../member.service";
+import {MemberService} from "../../service/member.service";
 import {Location} from "@angular/common";
 
 @Component({
