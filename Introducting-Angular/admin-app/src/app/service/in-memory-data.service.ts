@@ -6,6 +6,7 @@ import {Member} from "../model/member";
   providedIn: 'root'
 })
 export class InMemoryDataService implements InMemoryDbService {
+  readonly INITIAL_ID = 11;
   createDb() {
     const members = [
       {id: 1, name: '一郎'},
@@ -19,6 +20,6 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   genId(members: Member[]): number {
-    return members.length > 0 ? Math.max(...members.map(member => member.id)) + 1 : 11;
+    return members.length > 0 ? Math.max(...members.map(member => member.id)) + 1 : this.INITIAL_ID;
   }
 }

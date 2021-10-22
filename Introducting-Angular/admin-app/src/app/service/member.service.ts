@@ -26,7 +26,7 @@ export class MemberService {
   getMember(id: number): Observable<Member | undefined> {
     const url = `${this.membersUrl}/${id}`;
     return this.httpService.get<Member>(url).pipe(
-      tap(_ => this.log('社員データを取得しました')),
+      tap(_ => this.log(`社員${id}のデータを取得しました`)),
       catchError(this.handleError<Member>(`getMember id=${id}`))
     );
   }
@@ -34,7 +34,7 @@ export class MemberService {
   updateMember(member: Member | undefined): Observable<any> {
     return this.httpService.put<Member>(this.membersUrl, member, this.httpOptions)
       .pipe(
-        tap(_ => this.log('社員データを変更しました')),
+        tap(_ => this.log(`社員${member?.id}のデータを変更しました`)),
         catchError(this.handleError<any>(`updateMember`))
       );
   }
@@ -42,7 +42,7 @@ export class MemberService {
   addMember(member: Member): Observable<Member> {
     return this.httpService.post<Member>(this.membersUrl, member, this.httpOptions)
       .pipe(
-        tap(_ => this.log('社員データを追加しました')),
+        tap(_ => this.log(`社員${member?.id}のデータを追加しました`)),
         catchError(this.handleError<any>(`addMember`))
       );
   }
@@ -50,7 +50,7 @@ export class MemberService {
   deleteMember(id: number): Observable<any> {
     const url = `${this.membersUrl}/${id}`;
     return this.httpService.delete<Member>(url, this.httpOptions).pipe(
-      tap(_ => this.log('社員データを削除しました')),
+      tap(_ => this.log(`社員${id}のデータを削除しました`)),
       catchError(this.handleError<Member>(`deleteMember id=${id}`))
     );
   }
