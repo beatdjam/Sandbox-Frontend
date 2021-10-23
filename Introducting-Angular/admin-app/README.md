@@ -1,27 +1,40 @@
-# AdminApp
+# memo
+## Angularのインストール
+### nodeをインストールする
+* nodebrew のインストール
+```shell
+$ curl -L git.io/nodebrew | perl - setup
+```
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
+* pathを通す(zsh)
+```shell
+$ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zshrc
+$ source ~/.zshrc
+```
 
-## Development server
+* nodebrewで最新のNode.jsをインストール
+```shell
+$ nodebrew install latest
+$ nodebrew use latest
+```
+ 
+### Angular CLIをインストールする
+```shell
+$ npm install -g @angular/cli@10.0.4
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## アプリケーションの作成
+### プロジェクトの作成
+### Componentの作成
+* Componentの作成
+* Componentの呼び出し
+### Serviceの作成
+* Serviceの作成
+* ServiceのInject
+### Routerの利用
+* Routerの設定
+### HTTPクライアントの利用
+* In-memory Web APIの利用
+* エラーハンドリング
+* RxJS
+### ライフサイクル
