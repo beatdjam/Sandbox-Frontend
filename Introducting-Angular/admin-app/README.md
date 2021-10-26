@@ -1,5 +1,5 @@
 # memo
-公式チュートリアルをベースに手順メモ
+公式チュートリアルをベースにメモ
 
 ## Angularのインストール
 ### nodeをインストールする
@@ -43,7 +43,15 @@ $ ng generate component crisis-list
 ```
 ### Serviceの作成
 * Serviceの作成
+```shell
+$ ng generate service dialog
+```
+
 * ServiceのInject
+利用したいComponentなどのコンストラクタに記述する
+```typescript
+constructor(private memberService: MemberService) {}
+```
 ### Routerの利用
 * Routerの設定
 
@@ -57,7 +65,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CrisisListComponent } from './crisis-center/crisis-center.component';
 
-const appRoutes: Routes = [{ path: 'crisis-center', component: CrisisListComponent }];
+const appRoutes: Routes = [
+  // path指定
+  { path: 'crisis-center', component: CrisisListComponent },
+  // redirect
+  { path: '',   redirectTo: '/heroes', pathMatch: 'full' },
+  // マッチしない場合の遷移先
+  { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   imports: [
@@ -76,10 +91,19 @@ export class AppModule { }
 
 RouterでマッチするComponentに遷移するリンク
 ```html
-  <a routerLink="/crisis-center">CrisisList</a>
+<a routerLink="/crisis-center">CrisisList</a>
 ```
 ### HTTPクライアントの利用
 * In-memory Web APIの利用
 * エラーハンドリング
 * RxJS
 ### ライフサイクル
+基本的に上から流れる
+- ngOnChanges
+- ngOnInit
+- ngDoCheck
+- ngAfterContentInit
+- ngAfterContentChecked
+- ngAfterViewInit
+- ngAfterViewChecked
+- ngOnDestroy
