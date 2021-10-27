@@ -94,7 +94,72 @@ RouterでマッチするComponentに遷移するリンク
 <a routerLink="/crisis-center">CrisisList</a>
 ```
 ### HTTPクライアントの利用
-* In-memory Web APIの利用
+#### HTTPクライアントの導入 
+
+app.module.tsのNgModuleのimportsにHttpClientModuleを加える
+```typescript
+import { HttpClientModule } from '@angular/common/http';
+@NgModule({
+  imports: [
+    HttpClientModule,
+  ],
+})
+```
+
+#### In-memory Web APIの利用
+APIサーバーをシミュレートするIn-memory Web APIを利用する
+  
+Projectにangular-in-memory-web-apiの依存を追加
+```shell
+$ npm install angular-in-memory-web-api --save
+```
+
+importsにHttpClientInMemoryWebApiModuleを追加  
+```typescript
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
+import { HttpClientModule } from '@angular/common/http';
+@NgModule({
+  imports: [
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
+  ],
+})
+```
+
+forRootに設定するためのインメモリデータベースを管理するServiceを作成する
+```shell
+$ ng generate service InMemoryData
+```
+
+in-memory-data.service.tsには初期値で設定されるデータを記述する
+```typescript
+import { Injectable } from '@angular/core';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { Hero } from './hero';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InMemoryDataService implements InMemoryDbService {
+  createDb() {
+    const heroes = [
+      { id: 11, name: 'Dr Nice' },
+      { id: 12, name: 'Narco' },
+      { id: 13, name: 'Bombasto' },
+      { id: 14, name: 'Celeritas' },
+      { id: 15, name: 'Magneta' },
+    ];
+    return {heroes};
+  }
+
+  genId(heroes: Hero[]): number {
+    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
+  }
+}
+```
 * エラーハンドリング
 * RxJS
 ### ライフサイクル
