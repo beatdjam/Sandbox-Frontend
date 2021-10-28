@@ -160,8 +160,27 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 }
 ```
-* エラーハンドリング
-* RxJS
+- HTTPクライアントによるリクエスト
+  - HTTPクライアントのInject
+    
+    コンストラクタでHttpClientをInjectする
+    ```typescript
+    import { HttpClient, HttpHeaders } from '@angular/common/http';
+    ```
+    ```typescript
+    constructor(private http: HttpClient) { }
+    ```
+  - GET
+    Tに返り値の型を、引数にURLを指定する
+    ```typescript
+     this.http.get<Hero[]>(this.heroesUrl)
+    ```
+  - PUT
+  - POST
+  - DELETE
+
+  - エラーハンドリング
+  - RxJS
 ### ライフサイクル
 基本的に上から流れる
 - ngOnChanges
