@@ -171,9 +171,17 @@ export class InMemoryDataService implements InMemoryDbService {
     constructor(private http: HttpClient) { }
     ```
   - GET
-    Tに返り値の型を、引数にURLを指定する
+    Tに返り値の型を、引数にURLを指定する  
+    `tap()` はObservableの処理の後に副作用の処理をするもの。  
+    値を返したい場合は`map()`を使う。  
+    `catchError()`はエラーが発生したときに返す値を指定してStreamの処理を続ける。
     ```typescript
-     this.http.get<Hero[]>(this.heroesUrl)
+    getHeroes(): Observable<Hero[]> {
+      return this.http.get<Hero[]>(this.heroesUrl)
+        .pipe(
+          tap(heroes => this.log('fetched heroes')),
+          catchError(this.handleError<Hero[]>('getHeroes', []))
+        );
     ```
   - PUT
   - POST
