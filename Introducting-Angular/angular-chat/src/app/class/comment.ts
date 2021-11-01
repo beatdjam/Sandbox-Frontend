@@ -1,4 +1,6 @@
+import {User} from "./user";
+
 export class Comment {
-  name: string;
-  message: string;
+  constructor(public user: User, public message: string) {
+  }
 }
