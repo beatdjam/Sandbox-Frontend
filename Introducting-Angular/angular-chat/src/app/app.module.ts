@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
+import { CommentDatePipe } from './pipes/comment-date.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CommentDatePipe
   ],
   imports: [
     BrowserModule,
