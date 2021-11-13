@@ -36,8 +36,17 @@ export class AppComponent {
 
   addComment(comment: string): void {
     if (comment) {
-      this.commentsRef.push(new Comment({ user: this.currentUser, message: comment}));
+      this.commentsRef.push(new Comment({user: this.currentUser, message: comment}));
       this.input = '';
     }
+  }
+
+  updateComment(comment: Comment): void {
+    const {key, message} = comment;
+    this.commentsRef.update(key, {message});
+  }
+
+  deleteComment(comment: Comment): void {
+    this.commentsRef.remove(comment.key);
   }
 }
