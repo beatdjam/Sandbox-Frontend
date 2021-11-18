@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../core/services/auth.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'ac-sign-up',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  signup(form: NgForm) {
+    const { email, password } = form.value;
+    this.authService.create(email, password)
+      .then(() => this.router.navigateByUrl('/'));
+  }
 }
