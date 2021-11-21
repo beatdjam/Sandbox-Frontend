@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
 import * as firebase from "firebase";
+import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'ac-header',
@@ -10,12 +12,17 @@ import * as firebase from "firebase";
 export class HeaderComponent implements OnInit {
   isLogin: boolean;
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.afAuth.onAuthStateChanged((user: firebase.User) => {
       this.isLogin = !!user;
     });
+  }
+
+  logout(): void {
+    this.authService.logout()
+      .then(() => this.router.navigateByUrl("/login"));
   }
 
 }
