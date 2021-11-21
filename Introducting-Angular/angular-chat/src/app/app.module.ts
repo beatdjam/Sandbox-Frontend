@@ -20,7 +20,7 @@ import { LoginComponent } from './login/login.component';
     BrowserModule,
     SharedModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
