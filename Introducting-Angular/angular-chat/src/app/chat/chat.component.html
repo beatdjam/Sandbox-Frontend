@@ -22,6 +22,7 @@
         >
           <div class="media">
             <div *ngIf="comment.user.uid !== currentUser.uid" class="media-left">
+              <!-- TODO 投稿ユーザーのプロフィールページヘのリンクに変更する -->
               <a href="#" class="icon">{{comment.user.initial}}</a>
             </div>
             <div class="media-body">

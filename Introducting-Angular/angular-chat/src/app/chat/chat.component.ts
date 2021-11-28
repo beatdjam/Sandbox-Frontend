@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit {
     this.currentUser$ = this.afAuth.authState.pipe(
       map(user => {
         if (user) {
+          // TODO 新規登録直後にinitialの生成に失敗する
           this.currentUser = new User(user);
           return this.currentUser;
         }
