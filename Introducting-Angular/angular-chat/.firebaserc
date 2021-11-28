@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "test": "angular-chat-6c1d3"
+  },
+  "targets": {
+    "angular-chat-6c1d3": {
+      "hosting": {
+        "angular-chat": [
+          "angular-chat-6c1d3"
+        ]
+      }
+    }
+  }
+}
