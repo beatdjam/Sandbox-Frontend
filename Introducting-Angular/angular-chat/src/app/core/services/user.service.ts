@@ -17,7 +17,7 @@ export class UserService {
         const {user} = credential;
         const actionCodeSettings = {url: `http://localhost:4200/?newAccount=true&user=${user.uid}`}
         credential.user.sendEmailVerification(actionCodeSettings)
-          .then(() => this.db.object(`/users/${user.uid}`).set(new User(user)));
+          .then(() => this.db.object(`/users/${user.uid}`).set({ uid: user.uid, email: user.email }));
       });
   }
 
