@@ -15,20 +15,32 @@
         - BrowserModule
 
 ### Angular CLI
-https://angular.jp/guide/cli-builder
+https://angular.jp/cliより抜粋  
+
+npm経由でインストール  
+`npm install -g @angular/cli`  
+
 #### アプリケーションの作成
-`ng new`
+https://angular.jp/cli/new  
+Angularのプロジェクト/ワークスペースを作成するプロンプトを起動する。  
+`ng new <name>` または `ng n <name>`
+
 #### ライブラリの追加
+現在のAngularワークスペースにnpmパッケージを追加する  
 `ng add`
 #### ファイルの作成
-`ng g(generate)`  
-オプション
-- class
-- component
-- service
-- module
-- guard
-- service
+`ng generate <schematic>` または `ng g <schematic>`  
+
+- schematicに指定できるファイル(抜粋)
+    - application
+    - class
+    - component
+    - directive
+    - guard
+    - interface
+    - module
+    - pipe
+    - service
 ### Component
 - @Componentの中身
     - templateUrlとtemplate
