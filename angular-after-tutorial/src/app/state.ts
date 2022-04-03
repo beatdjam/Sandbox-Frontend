@@ -7,14 +7,14 @@ export interface UserListFilter {
 
 export interface State {
   userList: {
-    users: User[];
+    items: User[];
     filter: UserListFilter;
   };
 }
 
 export const initialState: State = {
   userList: {
-    users: [],
+    items: [],
     filter: {
       nameFilter: ''
     }
