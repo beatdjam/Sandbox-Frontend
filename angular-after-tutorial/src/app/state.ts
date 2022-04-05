@@ -9,6 +9,9 @@ export interface State {
   userList: {
     items: User[];
     filter: UserListFilter;
+  },
+  userDetail: {
+    user: User | null;
   };
 }
 
@@ -18,5 +21,8 @@ export const initialState: State = {
     filter: {
       nameFilter: ''
     }
+  },
+  userDetail: {
+    user: null
   }
 };

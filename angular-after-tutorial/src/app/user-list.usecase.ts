@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import {firstValueFrom, map, Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
 import {User} from "./user";
 import {Store} from "./store.service";
+import {UserApiService} from "./user-api.service";
 
 @Injectable({ providedIn: 'root' })
 export class UserListUsecase {
@@ -23,11 +23,7 @@ export class UserListUsecase {
   }
 
   async fetchUsers() {
-    const users = await firstValueFrom(
-      this.http
-        .get<{ data: User[] }>('https://reqres.in/api/users')
-        .pipe(map(resp => resp.data))
-    );
+    const users = await this.userApi.getAllUsers();
 
     this.store.update(state => ({
       ...state,
@@ -51,5 +47,5 @@ export class UserListUsecase {
     }));
   }
 
-  constructor(private http: HttpClient, private store: Store) { }
+  constructor(private userApi: UserApiService, private store: Store) { }
 }
