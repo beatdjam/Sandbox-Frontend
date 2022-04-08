@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {UserListFilter} from "../state";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs";
+import {UserListFilter} from "../store.service";
 
 @Component({
   selector: 'app-user-list-filter',

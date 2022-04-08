@@ -1,13 +1,13 @@
 import {map, Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
 import {User} from "./user";
-import {Store} from "./store.service";
+import {AkitaQuery, AkitaStore} from "./store.service";
 import {UserApiService} from "./user-api.service";
 
 @Injectable({ providedIn: 'root' })
 export class UserListUsecase {
   get users$(): Observable<User[]> {
-    return this.store
+    return this.query
       .select(state => state.userList)
       .pipe(
         map(({items, filter}) =>
@@ -19,7 +19,7 @@ export class UserListUsecase {
   }
 
   get filter$() {
-    return this.store.select(state => state.userList.filter);
+    return this.query.select(state => state.userList.filter);
   }
 
   async fetchUsers() {
@@ -47,5 +47,5 @@ export class UserListUsecase {
     }));
   }
 
-  constructor(private userApi: UserApiService, private store: Store) { }
+  constructor(private userApi: UserApiService, private store: AkitaStore, private query: AkitaQuery) { }
 }

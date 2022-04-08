@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
 import {UserApiService} from "./user-api.service";
-import {Store} from "./store.service";
+import {AkitaQuery, AkitaStore} from "./store.service";
 
 @Injectable({providedIn: 'root'})
 export class UserDetailUsecase {
   get user$() {
-    return this.store.select(state => state.userDetail.user);
+    return this.query.select(state => state.userDetail.user);
   }
 
-  constructor(private userApi: UserApiService, private store: Store) {
+  constructor(private userApi: UserApiService, private store: AkitaStore, private query: AkitaQuery) {
   }
 
   async fetchUser(userId: string) {

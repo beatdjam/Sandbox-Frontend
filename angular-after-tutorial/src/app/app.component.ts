@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { UserListUsecase } from './user-list.usecase';
-import {UserListFilter} from "./state";
+import {UserListFilter} from "./store.service";
 
 @Component({
   selector: 'my-app',
