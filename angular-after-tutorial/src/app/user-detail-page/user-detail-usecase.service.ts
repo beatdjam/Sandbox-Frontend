@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {UserApiService} from "./user-api.service";
-import {AkitaQuery, AkitaStore} from "./store.service";
+import {UserApiService} from "../api/user-api.service";
+import {AkitaStore} from "../store.service";
+import {AkitaQuery} from "../query.service";
 
 @Injectable({providedIn: 'root'})
 export class UserDetailUsecase {

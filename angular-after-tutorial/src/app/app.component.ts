@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { UserListUsecase } from './user-list.usecase';
+import { UserListUsecase } from './user-list/user-list.usecase';
 import {UserListFilter} from "./store.service";
 
 @Component({

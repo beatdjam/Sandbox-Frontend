@@ -1,8 +1,9 @@
 import {map, Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
-import {User} from "./user";
-import {AkitaQuery, AkitaStore} from "./store.service";
-import {UserApiService} from "./user-api.service";
+import {User} from "../model/user";
+import {AkitaStore} from "../store.service";
+import {UserApiService} from "../api/user-api.service";
+import {AkitaQuery} from "./query.service";
 
 @Injectable({ providedIn: 'root' })
 export class UserListUsecase {

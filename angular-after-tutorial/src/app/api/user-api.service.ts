@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {firstValueFrom, map} from "rxjs";
-import {User} from "./user";
+import {User} from "../model/user";
 
 const apiHost = 'https://reqres.in/api';
 

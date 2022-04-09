@@ -1,5 +1,5 @@
-import {User} from "./user";
-import {Query, Store as AkitaStateStore, StoreConfig} from "@datorama/akita";
+import {User} from "./model/user";
+import {Store as AkitaStateStore, StoreConfig} from "@datorama/akita";
 import {Injectable} from "@angular/core";
 
 export interface UserListFilter {
@@ -38,9 +38,3 @@ export class AkitaStore extends AkitaStateStore<AkitaState> {
   }
 }
 
-@Injectable({providedIn: 'root'})
-export class AkitaQuery extends Query<AkitaState> {
-  constructor(protected override store: AkitaStore) {
-    super(store);
-  }
-}
