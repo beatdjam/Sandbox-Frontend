@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { UserListUsecase } from './user-list/user-list.usecase';
-import {UserListFilter} from "./store.service";
+import {UserListFilterState} from "./user-list/user-list.store";
 
 @Component({
   selector: 'my-app',
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     this.userList.fetchUsers().then();
   }
 
-  setUserListFilter(value: UserListFilter) {
+  setUserListFilter(value: UserListFilterState) {
     this.userList.setNameFilter(value.nameFilter);
   }
 }

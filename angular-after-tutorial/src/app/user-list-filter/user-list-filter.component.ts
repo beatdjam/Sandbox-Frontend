@@ -1,18 +1,18 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {takeUntil} from "rxjs";
-import {UserListFilter} from "../store.service";
+import {UserListFilterState} from "../user-list/user-list.store";
 
 @Component({
   selector: 'app-user-list-filter',
   templateUrl: './user-list-filter.component.html'
 })
 export class UserListFilterComponent implements OnInit, OnDestroy {
-  @Input() set value(value: UserListFilter) {
+  @Input() set value(value: UserListFilterState) {
     this.setFormValue(value);
   }
 
-  @Output() valueChange = new EventEmitter<UserListFilter>();
+  @Output() valueChange = new EventEmitter<UserListFilterState>();
 
   form: FormGroup;
 
@@ -34,7 +34,7 @@ export class UserListFilterComponent implements OnInit, OnDestroy {
     this.onDestroy.unsubscribe();
   }
 
-  private setFormValue(value: UserListFilter) {
+  private setFormValue(value: UserListFilterState) {
     this.form.setValue(value, { emitEvent: false });
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {distinctUntilChanged, map, Subject, takeUntil} from "rxjs";
-import { UserDetailUsecase } from './user-detail-usecase.service';
+import {UserDetailUsecase} from "./user-detail-page.usecase";
 
 @Component({
   selector: 'app-user-detail-page',

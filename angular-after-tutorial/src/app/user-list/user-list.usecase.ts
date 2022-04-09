@@ -1,26 +1,26 @@
 import {map, Observable} from 'rxjs';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from "../model/user";
-import {AkitaStore} from "../store.service";
 import {UserApiService} from "../api/user-api.service";
-import {AkitaQuery} from "./query.service";
+import {UserListStore} from "./user-list.store";
+import {UserListQuery} from "./user-list.query";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class UserListUsecase {
   get users$(): Observable<User[]> {
     return this.query
-      .select(state => state.userList)
+      .select(state => state)
       .pipe(
-        map(({items, filter}) =>
-          items.filter(user =>
-            (user.first_name + user.last_name).includes(filter.nameFilter)
+        map(state =>
+          state.items.filter(user =>
+            (user.first_name + user.last_name).includes(state.filter.nameFilter)
           )
         )
       );
   }
 
   get filter$() {
-    return this.query.select(state => state.userList.filter);
+    return this.query.select(state => state.filter);
   }
 
   async fetchUsers() {
@@ -28,25 +28,20 @@ export class UserListUsecase {
 
     this.store.update(state => ({
       ...state,
-      userList: {
-        ...state.userList,
-        items: users
-      }
+      items: users
     }));
   }
 
   setNameFilter(nameFilter: string) {
     this.store.update(state => ({
       ...state,
-      userList: {
-        ...state.userList,
-        filter: {
-          ...state.userList.filter,
-          nameFilter
-        }
+      filter: {
+        ...state.filter,
+        nameFilter
       }
     }));
   }
 
-  constructor(private userApi: UserApiService, private store: AkitaStore, private query: AkitaQuery) { }
+  constructor(private userApi: UserApiService, private store: UserListStore, private query: UserListQuery) {
+  }
 }
