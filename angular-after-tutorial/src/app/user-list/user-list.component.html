@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let user of users">
+  <li *ngFor="let user of users$ | async">
     <user-list-item [user]="user"></user-list-item>
   </li>
 </ul>

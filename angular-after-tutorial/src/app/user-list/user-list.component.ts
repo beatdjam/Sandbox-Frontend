@@ -1,11 +1,16 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {User} from "../model/user";
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {UserListUsecase} from "./user-list.usecase";
 
 @Component({
   selector: 'user-list',
   templateUrl: './user-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserListComponent {
-  @Input() users!: User[];
+export class UserListComponent implements OnInit {
+  users$ = this.userList.users$;
+
+  constructor(private userList: UserListUsecase) {}
+  ngOnInit() {
+    this.userList.fetchUsers().then();
+  }
 }
