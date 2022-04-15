@@ -8,7 +8,9 @@ import {UserListFilterState} from "./user-list/user-list.store";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  // TODO : UserList配下で取得するようにする
   users$ = this.userList.users$;
+  // TODO : UI Stateとして別のStoreを作成し、UserListのViewQueryでごにょる
   userListFilter$ = this.userList.filter$;
 
   constructor(private userList: UserListUsecase) {}
