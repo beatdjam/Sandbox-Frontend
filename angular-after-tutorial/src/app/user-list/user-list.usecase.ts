@@ -12,16 +12,11 @@ export class UserListUsecase {
       .select(state => state)
       .pipe(
         map(state =>
-          // TODO filterは別のところに移動する
           state.items.filter(user =>
             (user.first_name + user.last_name).includes(state.filter.nameFilter)
           )
         )
       );
-  }
-
-  get filter$() {
-    return this.query.select(state => state.filter);
   }
 
   async fetchUsers() {
@@ -33,11 +28,11 @@ export class UserListUsecase {
     }));
   }
 
+  // TODO: これの責務が曖昧。rootのcomponent経由するならStoreにしたほうがスジがよさそう
   setNameFilter(nameFilter: string) {
     this.store.update(state => ({
       ...state,
       filter: {
-        ...state.filter,
         nameFilter
       }
     }));
