@@ -10,6 +10,7 @@ import { UserListFilterComponent } from './user-list-filter/user-list-filter.com
 import {ReactiveFormsModule} from "@angular/forms";
 import { UserDetailPageComponent } from './user-detail-page/user-detail-page.component';
 import { ExplicitSubscribeComponent } from './explicit-subscribe/explicit-subscribe.component';
+import { AsyncPipeComponent } from './async-pipe/async-pipe.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ExplicitSubscribeComponent } from './explicit-subscribe/explicit-subscr
     UserListComponent,
     UserListFilterComponent,
     UserDetailPageComponent,
-    ExplicitSubscribeComponent
+    ExplicitSubscribeComponent,
+    AsyncPipeComponent
   ],
     imports: [
         BrowserModule,
