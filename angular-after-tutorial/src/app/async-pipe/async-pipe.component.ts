@@ -1,16 +1,28 @@
 import {Component} from '@angular/core';
-import {Observable} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {DataService} from "../data.service";
 
 @Component({
   selector: 'app-async-pipe',
-  template: '<div>{{ value$ | async }}</div>'
+  template: `
+    <ng-container *ngIf="state$ | async as state">
+      <div>1. {{ state.value }}</div>
+      <div>2. {{ state.value }}</div>
+    </ng-container>
+  `
 })
 export class AsyncPipeComponent {
-  value$: Observable<string>;
+  readonly state$: Observable<State>;
 
   constructor(private dataService: DataService) {
-    this.value$ = this.dataService.valueChanges;
+    this.state$ = combineLatest(
+      [this.dataService.valueChanges],
+      (value) => ({value})
+    );
   }
 
 }
+
+type State = {
+  value: any;
+};
