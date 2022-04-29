@@ -1,5 +1,7 @@
-<ul>
-  <li *ngFor="let user of users$ | async">
-    #{{user.id}} {{user.first_name}} {{user.last_name}}
-  </li>
-</ul>
+<ng-container *ngIf="state$ | async as state">
+  <ul>
+    <li *ngFor="let user of state.users">
+      #{{user.id}} {{user.first_name}} {{user.last_name}}
+    </li>
+  </ul>
+</ng-container>
