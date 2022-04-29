@@ -6,8 +6,7 @@ import {combineQueries} from "@datorama/akita";
 import {UserListItem} from "./user-list.store";
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  templateUrl: './user-list.component.html'
 })
 export class UserListComponent implements OnInit {
   readonly state$: Observable<UserStateViewModel>;
