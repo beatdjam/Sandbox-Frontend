@@ -18,7 +18,7 @@ export class PasswordComponent {
 
   changeVisibility() {
     this.type = this.showPassword ? 'password' : 'text';
-    this.buttonLabel = this.showPassword ? '非表示' : '表示';
+    this.buttonLabel = this.showPassword ? '表示' : '非表示';
     this.showPassword = !this.showPassword;
   }
 }
