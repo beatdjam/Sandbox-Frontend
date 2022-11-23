@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'yumemi-exam-angular';
+
+  changeKey($event: string) {
+   console.log($event);
+  }
 }
