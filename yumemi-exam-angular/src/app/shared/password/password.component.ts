@@ -8,17 +8,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class PasswordComponent {
   @Input() label!: string;
   @Output() value = new EventEmitter<string>();
-  private showPassword: boolean = false;
-  type: 'password' | 'text' = 'password';
-  buttonLabel: '表示' | '非表示' = '表示';
+  showPassword: boolean = false;
 
   onLostFocus($event: string) {
-    this.value.emit($event);
+    if($event.trim().length) {
+      this.value.emit($event);
+    }
   }
 
   changeVisibility() {
-    this.type = this.showPassword ? 'password' : 'text';
-    this.buttonLabel = this.showPassword ? '表示' : '非表示';
     this.showPassword = !this.showPassword;
   }
 }
