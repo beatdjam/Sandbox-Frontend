@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-password',
   templateUrl: './password.component.html',
-  styleUrls: ['./password.component.scss']
+  styleUrls: ['./password.component.scss'],
 })
 export class PasswordComponent {
   @Input() label!: string;
@@ -11,7 +11,7 @@ export class PasswordComponent {
   showPassword: boolean = false;
 
   onLostFocus($event: string) {
-    if($event.trim().length) {
+    if ($event.trim().length) {
       this.value.emit($event);
     }
   }

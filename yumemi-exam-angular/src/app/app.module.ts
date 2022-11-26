@@ -5,14 +5,9 @@ import { AppComponent } from './app.component';
 import { PasswordComponent } from './shared/password/password.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PasswordComponent
-  ],
-  imports: [
-    BrowserModule,
-  ],
+  declarations: [AppComponent, PasswordComponent],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
