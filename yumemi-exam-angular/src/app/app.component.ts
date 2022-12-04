@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import * as http from 'http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { PrefectureRepository } from './repository/prefecture.repository';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'yumemi-exam-angular';
+  apiKey = '';
+
+  constructor(private repository: PrefectureRepository) {}
 
   changeKey($event: string) {
-    console.log($event);
+    this.apiKey = $event;
+    this.repository
+      .getAllPrefectures(this.apiKey)
+      .subscribe((resp) => console.log(resp));
   }
 }
