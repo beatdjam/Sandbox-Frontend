@@ -10,6 +10,7 @@ import DataFetch from "./components/DataFetch";
 import DataFetchById from "./components/DataFetchById";
 import ComponentC from "./components/ComponentC";
 import React, {createContext, useState} from "react";
+import CounterReducer from "./components/CounterRecucer";
 
 export const UserContext = createContext();
 export const LanguageContext = createContext();
@@ -33,6 +34,7 @@ function App() {
                     <ComponentC/>
                 </LanguageContext.Provider>
             </UserContext.Provider>
+            <CounterReducer/>
         </div>
     );
 }
